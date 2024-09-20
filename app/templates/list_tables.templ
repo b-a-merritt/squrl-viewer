@@ -1,0 +1,46 @@
+package templates
+
+templ ListTables(tables []string) {
+  <div class="list-tables">
+    <h1>All Tables</h1>
+    <ul>
+      for _, item := range tables {
+        <li>
+          <a href={ path(item) }>{ item }</a>
+          <span hx-get={"/count/" + item} hx-trigger="load"></span>
+        </li>
+      }
+    </ul>
+  </div>
+	<style type="text/css">
+		main {
+      height: calc(100% - 99px);
+			display: flex;
+      justify-content: center;
+      align-items: center;
+		}
+    .list-tables {
+      width: min(95%, 500px);
+      padding: 24px 16px;
+      border-radius: 24px;
+      box-shadow:  0px 4px 4px rgba(0, 0, 0, 0.2);
+      overflow-x: hidden;
+    }
+    .list-tables > ul {
+      height: min(60vh, 600px);
+      overflow-y: auto;
+    }
+    .list-tables > ul li {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2px 8px;
+    }
+    .list-tables > ul a {
+      color: var(--color-grey-4);
+      font-size: 20px;
+      line-height: 32px;
+    }
+	</style>
+}

@@ -1,0 +1,157 @@
+package templates
+
+import (
+	"fmt"
+)
+
+type (
+	Column struct {
+		Name     string
+		ColType  string
+		Size     int64
+		Nullable bool
+		Fk			 *ForiegnKey
+	}
+	ForiegnKey struct {
+		ColName		 string
+		FTableName string
+		FColName   string
+		Options    []interface{}
+	}
+)
+
+templ AddRow(name string, columns []Column) {
+	<tr>
+		<td>
+			<div>
+				<form 
+					id="add-row"
+					hx-post={ "/table/" + name }
+					hx-target="tbody"
+					hx-swap="beforeend"
+				>
+					<button>
+						Submit
+					</button>
+				</form>
+			</div>
+		</td>
+		for _, col := range columns {
+			<td>
+				<div>
+					if col.Fk != nil {
+							<select
+								form="add-row"
+								name={ col.Name }
+							>
+								if col.Nullable {
+									<option value="">
+										None
+									</option>
+								}
+								for _, option := range col.Fk.Options {
+									<option
+										value={ fmt.Sprintf("%v", option) }
+									>
+										{ fmt.Sprintf("%v", option) }
+									</option>
+								}
+							</select>
+					} else if col.Name == "id" {
+						if col.ColType == "INT4" {
+							<div>
+								DEFAULT
+							</div>
+						} else {
+							<input
+								form="add-row"
+								type="text"
+								maximum={ fmt.Sprintf("%v", col.Size) }
+								name={ col.Name }
+								required={ fmt.Sprintf("%v", !col.Nullable) }
+							/>
+						}
+					} else {
+						switch col.ColType {
+							case "BOOL":
+								<input
+									form="add-row"
+									name={ col.Name }
+									type="checkbox"
+								/>
+								<label style="font-size: 12px;">
+									{ col.Name }
+								</label>
+							case "INT2":
+								<input
+									form="add-row"
+									name={ col.Name }
+									type="number"
+								/>
+							case "INT4":
+								<input
+									form="add-row"
+									name={ col.Name }
+									type="number"
+								/>
+							case "FLOAT4":
+								<input
+									form="add-row"
+									name={ col.Name }
+									type="number"
+								/>
+							case "VARCHAR":
+								<input
+									form="add-row"
+									maximum={ fmt.Sprintf("%v", col.Size) }
+									name={ col.Name }
+									type="text"
+									required={ fmt.Sprintf("%v", !col.Nullable) }
+								/>
+							case "_VARCHAR":
+								<div style="display: flex; flex-flow: column nowrap;">
+									<label style="font-size: 12px; text-align: center;">
+										Comma separated list of values
+									</label>
+									<textarea
+										form="add-row"
+										name={ col.Name }
+									>
+									</textarea>
+								</div>
+							case "TIMESTAMP":
+								<input
+									form="add-row"
+									name={ col.Name }
+									type="datetime-local"
+									required={ fmt.Sprintf("%v", !col.Nullable) }
+								/>
+							case "DATE":
+								<input
+									form="add-row"
+									name={ col.Name }
+									type="datetime-local"
+									required={ fmt.Sprintf("%v", !col.Nullable) }
+								/>
+							case "UNKNOWN":
+								<div style="display: flex; flex-flow: column nowrap;">
+									<label style="font-size: 12px; text-align: center;">
+										Type Unknown (possible enum)
+									</label>
+									<input
+										form="add-row"
+										maximum={ fmt.Sprintf("%v", col.Size) }
+										name={ col.Name }
+										type="text"
+										required={ fmt.Sprintf("%v", !col.Nullable) }
+									/>
+								</div>
+							default:
+								<div>{ col.ColType }</div>
+						}
+					}
+				</div>
+			</td>
+		}
+	</tr>
+}

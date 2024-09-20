@@ -1,0 +1,9 @@
+package templates
+
+templ Table(rows [][]interface{}) {
+  <tbody>
+    for i, row := range rows {
+      @Row(i, row)
+    }
+  </tbody>
+}

@@ -1,0 +1,20 @@
+package templates
+
+import "fmt"
+
+templ Row(i int, row []interface{}) {
+  <tr>
+    <td>
+      <div>
+        { fmt.Sprintf("%v", i + 1) }
+      </div>
+    </td>
+    for _, item := range row {
+      <td>
+        <div>
+          { fmt.Sprintf("%v", item) }
+        </div>
+      </td>
+    }
+  </tr>
+}

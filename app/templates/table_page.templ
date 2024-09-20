@@ -1,0 +1,56 @@
+package templates
+
+templ TablePage(name string, columns []string, rows [][]interface{}) {
+  <div class="options">
+    <button 
+      class="outline"
+      hx-post={ "/" + name }
+      hx-target="tbody"
+      hx-swap="afterbegin"
+    >
+      Add row
+    </button>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      @TableColumns(name, columns, []string{})
+      @Table(rows)
+    </table>
+  </div>
+  <style type="text/css">
+    .options {
+      width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      box-sizing: border-box;
+      padding: 24px 36px;
+      gap: 36px;
+      background-color: var(--color-grey-0);
+    }
+
+    .table-wrapper {
+      width: 100%;
+      height: calc(100% - 180px);
+      overflow-x: auto;
+    }
+
+    table {
+      min-width: calc(100vw - 12px);
+    }
+
+    tbody tr:nth-child(even) td {
+      background-color: var(--color-grey-1);
+    }
+
+    tbody td {
+      padding: 4px 12px;
+    }
+    
+    tbody td div {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+}

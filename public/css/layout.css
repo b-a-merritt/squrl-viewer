@@ -1,0 +1,62 @@
+main {
+  overflow-x: hidden;
+}
+
+ol,
+ul,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
+}
+
+button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 16px;
+  color: var(--color-grey-4);
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--color-grey-1);
+}
+
+.outline {
+  background-color: var(--color-grey-1);
+  border-color: var(--color-grey-3);
+}
+
+.outline:hover {
+  background-color: var(--color-grey-2);
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid var(--color-grey-2);
+}
+
+th div {
+  resize:horizontal;
+  overflow:auto;
+}

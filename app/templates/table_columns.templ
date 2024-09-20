@@ -1,0 +1,31 @@
+package templates
+
+templ TableColumns(name string, columns []string, sortBy []string) {
+  <thead>
+    <tr>
+      <th>
+        <div>
+          index
+        </div>
+      </th>
+      for _, col := range columns {
+        @ColumnHeaderCellNone(name, col)
+      }
+    </tr>
+  </thead>
+  <style type="text/css">
+    thead th {
+      color: var(--color-grey-4);
+      background-color: var(--color-grey-1);
+      border: 1px solid var(--color-grey-2);
+    }
+    thead th div {
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+  </style>
+}
